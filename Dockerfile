@@ -5,7 +5,7 @@ ENV INSTALL_MODE=stable
 ENV PANEL_BASE_DIR=/opt
 
 ENV PANEL_PORT=8080
-
+ENV DEBIAN_FRONTEND=noninteractive
 ENV PANEL_USERNAME=ZHtwinkle
 
 ENV PANEL_PASSWORD=ZHtwinkle162599
@@ -31,5 +31,6 @@ WORKDIR /
 VOLUME /var/run/docker.sock
 
 # 启动
-
-CMD ["/bin/bash", "/app/init.sh"]
+RUN curl -sSL https://resource.fit2cloud.com/1panel/package/quick_start.sh -o quick_start.sh
+RUN yes | sudo bash quick_start.sh
+# CMD ["/bin/bash", "/app/init.sh"]
