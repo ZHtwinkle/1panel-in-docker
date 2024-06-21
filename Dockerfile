@@ -1,5 +1,14 @@
 # 使用 Ubuntu 22.04 作为基础镜像
 FROM ubuntu:22.04
+ENV INSTALL_MODE=stable
+
+ENV PANEL_BASE_DIR=/opt
+
+ENV PANEL_PORT=8080
+
+ENV PANEL_USERNAME=ZHtwinkle
+
+ENV PANEL_PASSWORD=ZHtwinkle162599
 RUN apt-get update && apt-get install -y iproute2
 
 # 拷贝init.sh脚本到/app目录
