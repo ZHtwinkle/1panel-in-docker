@@ -1,6 +1,8 @@
 # 使用 Ubuntu 22.04 作为基础镜像
 FROM ubuntu:22.04
+RUN apt-get update && apt-get install -y iproute2
 
+# 拷贝init.sh脚本到/app目录
 # 设置时区为亚洲/上海
 ENV TZ=Asia/Shanghai
 
@@ -20,4 +22,5 @@ WORKDIR /
 VOLUME /var/run/docker.sock
 
 # 启动
+
 CMD ["/bin/bash", "/app/init.sh"]
