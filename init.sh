@@ -32,28 +32,7 @@ function Fake_Systemctl()
     fi
 }
 
-# 简单判断是不是首次启动
-if [[ ! -e /usr/bin/systemctl ]] || [[ ! -e /usr/bin/reboot ]] || [[ ! -e /usr/sbin/cron ]]; then
 
-    which docker >/dev/null 2>&1
-    if [[ $? -ne 0 ]]; then
-        curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg
-        chmod a+r /etc/apt/keyrings/docker.gpg
-        echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(. /etc/os-release && echo $VERSION_CODENAME) stable" > /etc/apt/sources.list.d/docker.list
-        apt-get update
-        apt-get install docker-ce-cli -y
-    fi
-    apt-get clean
-    rm -rf /var/lib/apt/lists/*
-    which docker-compose >/dev/null 2>&1
-    if [[ $? -ne 0 ]]; then
-        curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-        ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
-        chmod +x /usr/local/bin/docker-compose
-    fi
-
-    rm -rf /usr/bin/systemctl
-    cat > /usr/bin/systemctl <<EOL
 #!/bin/bash
 
 bash "$0" \$*
