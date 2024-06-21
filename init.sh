@@ -6,8 +6,6 @@
 # 管理账户: PANEL_USERNAME
 # 管理密码: PANEL_PASSWORD
 
-FLAG_FILE="/opt/1panel_initialized"
-
 function Fake_Systemctl()
 {
     if [[ "$2" = "1panel" ]] || [[ "$2" = "1panel.service" ]]; then
@@ -34,8 +32,8 @@ function Fake_Systemctl()
     fi
 }
 
-# 检查是否是首次启动
-if [[ ! -e $FLAG_FILE ]]; then
+# 简单判断是不是首次启动
+if [[ ! -e /usr/bin/systemctl ]] || [[ ! -e /usr/bin/reboot ]] || [[ ! -e /usr/sbin/cron ]]; then
     apt-get update
     apt-get install ca-certificates curl gnupg dpkg wget cron -y
     which docker >/dev/null 2>&1
@@ -97,9 +95,6 @@ EOL
     bash /tmp/quick_start.sh
     rm -rf /tmp/install.sh
     rm -rf /tmp/1panel-*
-
-    # 创建标志文件
-    touch $FLAG_FILE
 fi
 
 if [[ ! -z "$1" ]]; then
