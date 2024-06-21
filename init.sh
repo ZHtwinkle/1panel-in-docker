@@ -33,31 +33,7 @@ function Fake_Systemctl()
 }
 
 
-#!/bin/bash
 
-bash "$0" \$*
-EOL
-    chmod +x /usr/bin/systemctl
-
-    rm -rf /usr/bin/reboot
-    cat > /usr/bin/reboot <<EOL
-#!/bin/bash
-
-echo -n "Reboot is not supported, restart 1panel ... "
-bash "$0" restart 1panel
-if [[ \$? -ne 0 ]]; then
-    echo "failed"
-    exit 1
-fi
-echo "ok"
-EOL
-    chmod +x /usr/bin/reboot
-
-    cd /tmp/
-    cat > /tmp/install.sh <<EOL
-#!/bin/bash
-
-rm -rf /tmp/1panel-*.tar.gz
 cd /tmp/1panel-*
 sed -i '1 a function read()\n{\n    return 0\n}\n' install.sh
 bash install.sh
